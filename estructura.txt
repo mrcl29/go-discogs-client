@@ -1,0 +1,28 @@
+go-discogs/
+├── go.mod
+├── go.sum
+├── README.md
+├── LICENSE
+│
+├── core_client/ (Opcional, pero recomendado si el paquete raíz se vuelve inmenso)
+│   --- Nota: Para mantenerlo idiomático, pondremos esto en la raíz ---
+│
+├── client.go          # Motor principal: Struct Client, NewClient, y ejecución de peticiones
+├── options.go         # Configuración del cliente (auth, rate limits, user-agent)
+├── errors.go          # Tipos de errores personalizados de la API
+├── pagination.go      # Estructuras globales para paginación y ordenamiento
+├── auth.go            # Lógica para manejar tokens personales y OAuth 1.0a
+│
+├── database.go        # Servicio: Releases, Masters, Artists, Labels
+├── search.go          # Servicio: Búsquedas con filtros avanzados
+├── collection.go      # Servicio: Colecciones de usuarios y carpetas
+├── wantlist.go        # Servicio: Wantlists de usuarios
+├── marketplace.go     # Servicio: Inventario, Órdenes, Listados, Precios
+├── user.go            # Servicio: Perfiles e Identidad
+│
+├── models_*.go        # (Opcional) Si las estructuras son enormes, sepáralas
+│
+├── client_test.go     # Pruebas del motor HTTP y configuración
+├── database_test.go   # Pruebas de los endpoints de base de datos
+├── marketplace_test.go# Pruebas del marketplace
+└── mock_test.go       # Utilidades de testing (servidor HTTP simulado)
