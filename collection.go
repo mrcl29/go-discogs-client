@@ -68,19 +68,29 @@ type CollectionService interface {
 
 // NoteField represents a user-defined custom notes field.
 type NoteField struct {
-	ID       int      `json:"id"`
-	Name     string   `json:"name"`
-	Type     string   `json:"type"` // e.g., "dropdown" or "textarea"
-	Public   bool     `json:"public"`
-	Position int      `json:"position"`
-	Options  []string `json:"options,omitempty"`
-	Lines    int      `json:"lines,omitempty"`
+	// ID is the unique identifier for the custom field.
+	ID int `json:"id"`
+	// Name is the name of the custom field (e.g., "Shelf Location").
+	Name string `json:"name"`
+	// Type is the field input type: e.g., "dropdown" or "textarea".
+	Type string `json:"type"`
+	// Public indicates if the field is visible to other users.
+	Public bool `json:"public"`
+	// Position is the display order of the field.
+	Position int `json:"position"`
+	// Options is a list of valid values for "dropdown" type fields.
+	Options []string `json:"options,omitempty"`
+	// Lines is the number of lines to display for "textarea" type fields.
+	Lines int `json:"lines,omitempty"`
 }
 
 // CollectionValue represents the estimated monetary value of a collection.
 type CollectionValue struct {
+	// Minimum is the estimated minimum value of the collection.
 	Minimum string `json:"minimum"`
-	Median  string `json:"median"`
+	// Median is the estimated median value of the collection.
+	Median string `json:"median"`
+	// Maximum is the estimated maximum value of the collection.
 	Maximum string `json:"maximum"`
 }
 

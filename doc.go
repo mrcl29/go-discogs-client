@@ -5,6 +5,14 @@
 // data such as collections and wantlists. It is designed to be thread-safe,
 // context-aware, and follows standard Go conventions for clean and scalable integration.
 //
+// # Getting Started
+//
+// To begin using the SDK, initialize a new client using the NewClient constructor.
+// By default, the client is configured for anonymous access, which is subject to
+// stricter rate limits and cannot access user-specific data or images.
+//
+//	client := discogs.NewClient(discogs.WithUserAgent("MyMusicApp/1.0"))
+//
 // # Authentication
 //
 // Discogs provides several levels of authentication, each with different rate limits
@@ -20,17 +28,17 @@
 //  4. OAuth 1.0a: Full three-legged authentication. Required for actions that
 //     modify user data on behalf of any Discogs user (e.g., managing collections).
 //
-// # Rate Limiting
+// # Automatic Rate Limiting
 //
 // The client automatically handles rate limiting based on your authentication status
 // (60 req/min for authenticated, 25 req/min for anonymous). It uses a local token
 // bucket to pace requests, ensuring your application remains resilient and avoids
-// 429 Too Many Requests errors from Discogs servers.
+// 429 Too Many Requests errors from Discogs servers. Network calls will block
+// until a token is available or the context is cancelled.
 //
-// # Services
+// # Service-Oriented Design
 //
-// The client is organized into logical services, each representing a domain-specific
-// area of the Discogs API:
+// The SDK is organized into domain-specific services, accessible via the main Client struct:
 //
 //   - Database: Search and browse Releases, Masters, Artists, and Labels.
 //   - Marketplace: Manage listings, orders, and price suggestions.
@@ -40,31 +48,24 @@
 //   - Wantlist: Manage items you are looking to acquire.
 //   - Lists: Access user-curated lists of releases.
 //
-// # Pagination
+// Each service method accepts a context.Context as its first argument for proper
+// timeout and cancellation management.
 //
-// Many Discogs endpoints return paginated results. This library provides a PageOptions
-// struct to easily specify page numbers, items per page (up to 100), and sorting fields/order.
-// All paginated responses include a Pagination object with metadata for easy navigation.
+// # Concurrency and Thread Safety
 //
-// # User-Agent Requirement
+// The Client and its attached services are designed to be thread-safe and can be
+// shared across multiple goroutines. The internal HTTP client and rate limiter
+// handle concurrent access safely.
 //
-// Discogs mandates a unique User-Agent header for all requests. The client defaults
-// to "GoDiscogsClient/1.0", but it is highly recommended to set your own using the
-// WithUserAgent(string) option to identify your application clearly.
+// # Functional Options
 //
-// # Examples
-//
-// For complete, runnable examples, see the examples/ directory in the source repository.
-//
-// Basic anonymous client:
-//
-//	client := discogs.NewClient(discogs.WithUserAgent("MyMusicApp/1.0"))
-//
-// Authenticated client with a Personal Token:
+// Client configuration follows the functional options pattern, allowing for clean
+// and extensible initialization:
 //
 //	auth := &discogs.PersonalTokenAuth{Token: "your_secret_token"}
 //	client := discogs.NewClient(
 //		discogs.WithUserAgent("MyMusicApp/1.0"),
 //		discogs.WithAuth(auth),
+//		discogs.WithHTTPClient(&http.Client{Timeout: 30 * time.Second}),
 //	)
 package discogs

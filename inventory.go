@@ -56,36 +56,54 @@ type InventoryService interface {
 
 // InventoryExport represents the metadata and status of an inventory export task.
 type InventoryExport struct {
-	ID          int    `json:"id"`
-	Status      string `json:"status"`
-	URL         string `json:"url"`
+	// ID is the unique identifier for the export task.
+	ID int `json:"id"`
+	// Status is the current state: e.g., "Queued", "Processing", "Completed".
+	Status string `json:"status"`
+	// URL is the API endpoint to track the export status.
+	URL string `json:"url"`
+	// DownloadURL is the endpoint to retrieve the final CSV file.
 	DownloadURL string `json:"download_url"`
-	CreatedTS   string `json:"created_ts"`
-	FinishedTS  string `json:"finished_ts"`
-	Filename    string `json:"filename"`
+	// CreatedTS is the timestamp when the export was requested.
+	CreatedTS string `json:"created_ts"`
+	// FinishedTS is the timestamp when the export was completed.
+	FinishedTS string `json:"finished_ts"`
+	// Filename is the name of the generated export file.
+	Filename string `json:"filename"`
 }
 
 // InventoryExportsResponse represents a paginated list of inventory exports.
 type InventoryExportsResponse struct {
-	Pagination Pagination        `json:"pagination"`
-	Items      []InventoryExport `json:"items"`
+	// Pagination contains metadata about the paginated results.
+	Pagination Pagination `json:"pagination"`
+	// Items is the list of inventory export tasks.
+	Items []InventoryExport `json:"items"`
 }
 
 // InventoryUpload represents the metadata and status of an inventory upload task.
 type InventoryUpload struct {
-	ID         int    `json:"id"`
-	Status     string `json:"status"`
-	CreatedTS  string `json:"created_ts"`
+	// ID is the unique identifier for the upload task.
+	ID int `json:"id"`
+	// Status is the current state: e.g., "Processing", "Completed".
+	Status string `json:"status"`
+	// CreatedTS is the timestamp when the upload was started.
+	CreatedTS string `json:"created_ts"`
+	// FinishedTS is the timestamp when the upload was completed.
 	FinishedTS string `json:"finished_ts"`
-	Filename   string `json:"filename"`
-	Results    string `json:"results"`
-	Type       string `json:"type"`
+	// Filename is the name of the uploaded file.
+	Filename string `json:"filename"`
+	// Results is a summary of the upload outcome.
+	Results string `json:"results"`
+	// Type is the upload action: "add", "change", or "delete".
+	Type string `json:"type"`
 }
 
 // InventoryUploadsResponse represents a paginated list of inventory uploads.
 type InventoryUploadsResponse struct {
-	Pagination Pagination        `json:"pagination"`
-	Items      []InventoryUpload `json:"items"`
+	// Pagination contains metadata about the paginated results.
+	Pagination Pagination `json:"pagination"`
+	// Items is the list of inventory upload tasks.
+	Items []InventoryUpload `json:"items"`
 }
 
 type inventoryService struct {

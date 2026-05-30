@@ -69,44 +69,62 @@ type MarketplaceService interface {
 
 // ListingIDResponse contains the ID of a newly created listing.
 type ListingIDResponse struct {
-	ListingID   int    `json:"listing_id"`
+	// ListingID is the unique identifier for the new listing.
+	ListingID int `json:"listing_id"`
+	// ResourceURL is the API endpoint for the new listing.
 	ResourceURL string `json:"resource_url"`
 }
 
 // OrderMessagesResponse represents a paginated list of order messages.
 type OrderMessagesResponse struct {
-	Pagination Pagination     `json:"pagination"`
-	Messages   []OrderMessage `json:"messages"`
+	// Pagination contains metadata about the paginated results.
+	Pagination Pagination `json:"pagination"`
+	// Messages is the list of messages in the order log.
+	Messages []OrderMessage `json:"messages"`
 }
 
 // OrderMessage represents a single message or status event in an order's log.
 type OrderMessage struct {
-	ID        string   `json:"id"`
-	Timestamp string   `json:"timestamp"`
-	Message   string   `json:"message"`
-	Type      string   `json:"type"`
-	Subject   string   `json:"subject"`
-	From      UserRef  `json:"from"`
-	Order     OrderRef `json:"order"`
+	// ID is the unique identifier for the message.
+	ID string `json:"id"`
+	// Timestamp is the date and time the message was sent.
+	Timestamp string `json:"timestamp"`
+	// Message is the text content of the message.
+	Message string `json:"message"`
+	// Type is the message type (e.g., "message", "status").
+	Type string `json:"type"`
+	// Subject is the message subject line.
+	Subject string `json:"subject"`
+	// From is a reference to the user who sent the message.
+	From UserRef `json:"from"`
+	// Order is a reference to the associated order.
+	Order OrderRef `json:"order"`
 }
 
 // OrderRef provides a simple reference to a marketplace order.
 type OrderRef struct {
-	ID          string `json:"id"`
+	// ID is the unique identifier for the order.
+	ID string `json:"id"`
+	// ResourceURL is the API endpoint for the order.
 	ResourceURL string `json:"resource_url"`
 }
 
 // FeeResponse contains the results of a marketplace fee calculation.
 type FeeResponse struct {
-	Value    float64 `json:"value"`
-	Currency string  `json:"currency"`
+	// Value is the numeric fee amount.
+	Value float64 `json:"value"`
+	// Currency is the currency code for the fee.
+	Currency string `json:"currency"`
 }
 
 // MarketplaceStats contains marketplace availability and pricing statistics for a release.
 type MarketplaceStats struct {
-	LowestPrice     Price `json:"lowest_price"`
-	NumForSale      int   `json:"num_for_sale"`
-	BlockedFromSale bool  `json:"blocked_from_sale"`
+	// LowestPrice is the current minimum price for the release.
+	LowestPrice Price `json:"lowest_price"`
+	// NumForSale is the total number of copies available.
+	NumForSale int `json:"num_for_sale"`
+	// BlockedFromSale indicates if the release is restricted from marketplace sales.
+	BlockedFromSale bool `json:"blocked_from_sale"`
 }
 
 type marketplaceService struct {
