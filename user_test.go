@@ -35,7 +35,7 @@ func TestGetProfile(t *testing.T) {
 			t.Errorf("expected path /users/testuser, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"id": 1, "username": "testuser", "name": "Test User"}`)
+		_, _ = fmt.Fprint(w, `{"id": 1, "username": "testuser", "name": "Test User"}`)
 	}
 
 	server, client := setupTestServer(handler)

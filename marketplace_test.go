@@ -38,7 +38,7 @@ func TestGetOrder(t *testing.T) {
 			t.Errorf("expected path /marketplace/orders/1-1, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"id": "1-1", "status": "New Order"}`)
+		_, _ = fmt.Fprint(w, `{"id": "1-1", "status": "New Order"}`)
 	}
 
 	server, client := setupTestServer(handler)
