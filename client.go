@@ -94,7 +94,7 @@ func NewClient(opts ...Option) *Client {
 	// - Authenticated: 60 requests per minute.
 	// - Anonymous: 25 requests per minute.
 	if c.auth.IsAuthenticated() {
-		c.rateLimiter = rate.NewLimiter(rate.Limit(60.0/60.0), 1)
+		c.rateLimiter = rate.NewLimiter(rate.Limit(1.0), 1)
 	} else {
 		c.rateLimiter = rate.NewLimiter(rate.Limit(25.0/60.0), 1)
 	}
@@ -151,7 +151,7 @@ func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) error
 	if err != nil {
 		return fmt.Errorf("http request failed: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	// Handle standard Discogs error status codes.
 	switch resp.StatusCode {

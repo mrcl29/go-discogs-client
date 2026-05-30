@@ -104,7 +104,7 @@ func (s *inventoryService) RequestExport(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusCreated && resp.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("discogs API error: %d %s", resp.StatusCode, resp.Status)
@@ -159,7 +159,7 @@ func (s *inventoryService) DownloadExport(ctx context.Context, exportID int) (io
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		resp.Body.Close()
+		_ = resp.Body.Close()
 		return nil, fmt.Errorf("discogs API error: %d %s", resp.StatusCode, resp.Status)
 	}
 
@@ -190,7 +190,7 @@ func (s *inventoryService) upload(ctx context.Context, action string, csvData io
 	if _, err := io.Copy(part, csvData); err != nil {
 		return nil, err
 	}
-	w.Close()
+	_ = w.Close()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, &b)
 	if err != nil {

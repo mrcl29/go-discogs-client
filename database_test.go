@@ -13,7 +13,7 @@ func TestGetRelease(t *testing.T) {
 			t.Errorf("expected path /releases/123, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"id": 123, "title": "Nevermind", "year": 1991}`)
+		_, _ = fmt.Fprint(w, `{"id": 123, "title": "Nevermind", "year": 1991}`)
 	}
 
 	server, client := setupTestServer(handler)
@@ -45,7 +45,7 @@ func TestSearch(t *testing.T) {
 			t.Errorf("expected type release, got %s", q.Get("type"))
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"results": [{"id": 1, "title": "Nirvana - Nevermind"}]}`)
+		_, _ = fmt.Fprint(w, `{"results": [{"id": 1, "title": "Nirvana - Nevermind"}]}`)
 	}
 
 	server, client := setupTestServer(handler)

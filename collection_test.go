@@ -13,7 +13,7 @@ func TestListFolders(t *testing.T) {
 			t.Errorf("expected path /users/testuser/collection/folders, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"folders": [{"id": 0, "name": "All"}, {"id": 1, "name": "Uncategorized"}]}`)
+		_, _ = fmt.Fprint(w, `{"folders": [{"id": 0, "name": "All"}, {"id": 1, "name": "Uncategorized"}]}`)
 	}
 
 	server, client := setupTestServer(handler)
@@ -35,7 +35,7 @@ func TestGetCollectionItemsByFolder(t *testing.T) {
 			t.Errorf("expected path /users/testuser/collection/folders/1/releases, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"releases": [{"id": 123, "instance_id": 1, "basic_information": {"title": "Release 1"}}]}`)
+		_, _ = fmt.Fprint(w, `{"releases": [{"id": 123, "instance_id": 1, "basic_information": {"title": "Release 1"}}]}`)
 	}
 
 	server, client := setupTestServer(handler)
