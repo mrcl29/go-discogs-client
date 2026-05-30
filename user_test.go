@@ -13,7 +13,7 @@ func TestGetIdentity(t *testing.T) {
 			t.Errorf("expected path /oauth/identity, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"id": 1, "username": "testuser"}`)
+		_, _ = fmt.Fprint(w, `{"id": 1, "username": "testuser"}`)
 	}
 
 	server, client := setupTestServer(handler)

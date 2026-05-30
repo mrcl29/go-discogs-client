@@ -13,7 +13,7 @@ func TestGetListing(t *testing.T) {
 			t.Errorf("expected path /marketplace/listings/123, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"id": 123, "status": "For Sale", "price": {"currency": "USD", "value": 10.5}}`)
+		_, _ = fmt.Fprint(w, `{"id": 123, "status": "For Sale", "price": {"currency": "USD", "value": 10.5}}`)
 	}
 
 	server, client := setupTestServer(handler)

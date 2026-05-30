@@ -13,7 +13,7 @@ func TestGetWantlist(t *testing.T) {
 			t.Errorf("expected path /users/testuser/wants, got %s", r.URL.Path)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"wants": [{"id": 123, "rating": 5, "basic_information": {"title": "Wanted Release"}}]}`)
+		_, _ = fmt.Fprint(w, `{"wants": [{"id": 123, "rating": 5, "basic_information": {"title": "Wanted Release"}}]}`)
 	}
 
 	server, client := setupTestServer(handler)
